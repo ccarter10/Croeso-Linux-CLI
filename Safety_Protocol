@@ -1,0 +1,101 @@
+# 🛡️ Croeso CLI Enterprise Safety & Security Protocol  
+**Version 1.0.0 – July 2025**
+
+## Overview
+
+Croeso CLI is a privacy-first, AI-powered Linux command-line assistant designed for secure, local system control. Unlike cloud-hosted CLI copilots, Croeso operates entirely offline while embedding multiple layers of safety controls.
+
+This document summarizes Croeso CLI’s key security features and risk management approach for enterprise deployment.
+
+## Core Security Philosophy
+
+- **Default Deny:** Only explicitly approved commands execute.  
+- **Least Privilege:** No root-level execution unless required and authorized.  
+- **Explicit User Consent:** All medium+ risk operations require user confirmation.  
+- **Defense in Depth:** Safety measures exist at every layer, from intent parsing to execution sandboxing.  
+- **Auditability:** Every operation is logged with full metadata for forensic review.
+
+## Risk Classification System
+
+| Risk Level | Examples               | Required Action                          |
+|------------|-----------------------|-----------------------------------------|
+| SAFE       | `ls`, `pwd`           | Auto-execute with logging               |
+| LOW        | `mkdir`, `touch`      | Auto-execute with logging               |
+| MEDIUM     | `mv`, `cp`            | User confirmation required              |
+| HIGH       | `rm -r`, `chmod 777`  | Double confirmation + rollback checkpoint |
+| CRITICAL   | `dd`, `mkfs`, fork bombs | Block by default; require admin override |
+| FORBIDDEN  | `rm -rf /`, `mv / /dev/null` | Permanently blocked                     |
+
+## Multi-Layer Safety Architecture
+
+User Input  
+↓  
+LLM Intent Parsing  
+↓  
+Syntax + Pattern Validation  
+↓  
+Risk Assessment & Classification  
+↓  
+User Confirmation (if required)  
+↓  
+Sandboxed Execution  
+↓  
+Real-Time Monitoring + Anomaly Detection  
+↓  
+Audit Logging + Rollback Capability  
+
+## Key Security Features
+
+### 1️⃣ Command Validation System
+- Regex Pattern Matching: Blocks known dangerous command structures.
+- Semantic Analysis: Identifies destructive actions beyond simple pattern matches.
+- Protected Path Awareness: Automatically blocks commands affecting sensitive directories like `/boot`, `/root`, or `.ssh` keys.
+
+### 2️⃣ Rollback Checkpoints
+- Automatic backups before MEDIUM+ risk actions.
+- Restore Points: Users can revert to the last safe state using CLI commands.
+- Checkpoint Retention Policies configurable per organization.
+
+### 3️⃣ Audit Logging
+- Immutable JSON logs containing:
+  - Command executed
+  - Natural language intent
+  - User identity
+  - Risk level
+  - Confirmation actions taken
+  - Timestamp
+  - Execution result
+- Supports secure export formats and retention compliance.
+
+### 4️⃣ Runtime Monitoring
+- Resource Limits: Enforced caps on CPU, memory, disk I/O, and network activity.
+- Anomaly Detection: Flags suspicious behaviors such as rapid file deletion or unexpected network access.
+
+### 5️⃣ Emergency Safeguards
+- Panic Mode: Ctrl+Shift+X x3 kills all active Croeso operations and locks down further commands.
+- Safe Mode Boot: Run Croeso CLI in read-only audit mode without allowing system changes.
+
+## Deployment Guidelines
+
+- Recommended User Mode:  
+  Run Croeso CLI as a non-root user with explicit sudo escalation for high-risk actions.
+- LLM Hosting:  
+  Croeso CLI supports on-premises LLM deployment using quantized open-weight models. No cloud dependency.
+- Integration Options:  
+  Supports enterprise SSO, multi-user policy enforcement, and configuration profiles for larger deployments.
+
+## Disclosure & Compliance
+
+- **Responsible Disclosure Policy:**  
+  Security issues should be reported privately to security@croeso-cli.org using our PGP key.
+
+- **Compliance Considerations:**  
+  Croeso CLI can be configured to align with ISO 27001, NIST 800-53, and GDPR data privacy requirements through log retention and audit trail management.
+
+## Contact & Support
+
+**Croeso CLI Security Team**  
+Email: security@croeso-cli.org  
+GitHub: https://github.com/[your-organization]/croeso-cli  
+
+© 2025 Croeso CLI. All rights reserved.
