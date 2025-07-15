@@ -237,6 +237,15 @@ The goal isn’t to create the perfect natural language interface - it’s to st
 
 -----
 
+Croeso CLI includes and relies on LLaMA 4 model weights and architecture provided by Meta Platforms, Inc. under the LLaMA Community License Agreement.
+
+Croeso CLI uses LLaMA 4 models strictly for local inference. We do not redistribute or resell LLaMA 4 model weights as a standalone product.
+
+LLaMA 4 Licensing Terms:
+For full terms, see: https://ai.meta.com/llama/license
+
+© Meta Platforms, Inc. All rights reserved under the LLaMA Community License Agreement.
+
 <p align="center">
   <b>Together, let's make Linux conversations, not commands.</b>
 </p>
